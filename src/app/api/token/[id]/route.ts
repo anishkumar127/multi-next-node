@@ -19,7 +19,7 @@ async function acquireTokens(tenant: any) {
       clientId: "afb54906-660f-4a68-8178-74c638699fcc", // azure shan cubicdirect.
       authority:
         // "https://login.microsoftonline.com/common",
-        `https://login.microsoftonline.com/${tenant}.onmicrosoft.com`,
+        `https://login.microsoftonline.com/${tenant}.com`,
       clientCertificate: {
         thumbprint: "EC0763FD45A99CF857765451DAF32ABD1BCDCA1A",
         privateKey: file,
