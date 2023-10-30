@@ -1,13 +1,13 @@
 "use client";
-
 import {
   InteractionRequiredAuthError,
   PublicClientApplication,
 } from "@azure/msal-browser";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Home() {
-  // Get Silent Token
+const useToken = ({ site }: any) => {
+    console.log("CALLED",site);
+  const [token, setToken] = useState<any>("");
   // useEffect(() => {
   //   const getSilentToken = async () => {
   //     const msalConfig = {
@@ -27,7 +27,7 @@ export default function Home() {
   //     const accounts = await pca.getAllAccounts();
   //     if (accounts.length === 0) {
   //       const loginRequest = {
-  //         scopes: [`https://${"cubicdirect"}.sharepoint.com/.default`],
+  //         scopes: [`https://${site}.sharepoint.com/.default`],
   //       };
   //       const loginResponse = await pca.loginPopup(loginRequest);
   //       await pca.setActiveAccount(loginResponse.account);
@@ -36,7 +36,7 @@ export default function Home() {
   //     }
   //     //acquire token
   //     const acquireTokenScope = {
-  //       scopes: [`https://${"cubicdirect"}.sharepoint.com/.default`],
+  //       scopes: [`https://${site}.sharepoint.com/.default`],
   //       loginHint: `${accounts[0]?.username}`,
   //     };
 
@@ -48,6 +48,7 @@ export default function Home() {
   //           "Context acquire token silent=>",
   //           tokenResponse.accessToken
   //         );
+  //         setToken(tokenResponse.accessToken);
   //       })
   //       .catch(async (error) => {
   //         // if (error instanceof InteractionRequiredAuthError) {
@@ -66,7 +67,8 @@ export default function Home() {
   //       });
   //   };
   //   getSilentToken();
-  // }, []);
+  // }, [site]);
+  return token;
+};
 
-  return <main>home</main>;
-}
+export default useToken;
