@@ -19,7 +19,7 @@ async function acquireTokens(tenant: any) {
       clientId: "afb54906-660f-4a68-8178-74c638699fcc", // azure shan cubicdirect.
       authority:
         // "https://login.microsoftonline.com/common",
-        `https://login.microsoftonline.com/${tenant}.com`,
+        `https://login.microsoftonline.com/${tenant}.onmicrosoft.com`,
       clientCertificate: {
         thumbprint: "EC0763FD45A99CF857765451DAF32ABD1BCDCA1A",
         privateKey: file,
@@ -44,7 +44,7 @@ async function acquireTokens(tenant: any) {
   return tokens;
 }
 
-export async function GET(req: any, res: any) {
+export async function GET(req: Request, res: Response) {
   try {
     const siteUrl = req?.url?.split("token/")[1];
     console.log("siteUrl", siteUrl);
