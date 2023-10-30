@@ -12,8 +12,15 @@ const GetById = ({ params }: any) => {
   useEffect(() => {
     (async () => {
       try {
+        const tokenFetchUrl = () => {
+          if (process.env.NODE_ENV === 'development') {
+            return 'http://localhost:3000';
+          } else if (process.env.NODE_ENV === 'production') {
+            return 'https://multi-next-node.vercel.app';
+          }
+        }
         const response = await axios.get(
-          `http://localhost:3000/api/token/${site}`
+          `${tokenFetchUrl()}/api/token/${site}`
         );
         console.log("C", response?.data?.tokens);
         setToken(response?.data?.tokens);
