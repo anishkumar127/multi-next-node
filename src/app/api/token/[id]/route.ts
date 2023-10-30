@@ -6,6 +6,7 @@ import { promises as fs } from "fs";
 import path from "path";
 
 async function acquireTokens(tenant: any) {
+  console.log("tenant in api side.",tenant);
   const currentDir = process.cwd();
 
   const filePath = path.resolve(currentDir, "public/private-key.pem");
