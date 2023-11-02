@@ -157,6 +157,93 @@ const GetById = ({ params }: any) => {
                   } catch (error: any) {
                     console.log("other tanet error", error);
                     console.log("Status code Error", error?.response?.status);
+                    if (error?.response?.status === 401) {
+                      const getAccessToken = async () => {
+                        try {
+                          const msalConfig = {
+                            auth: {
+                              clientId: 'afb54906-660f-4a68-8178-74c638699fcc',
+                              // authority: `https://login.microsoftonline.com/${tenantId}`,
+                              authority: "https://login.microsoftonline.com/common/", // multi tanet
+                            },
+                            cache: {
+                              // cacheLocation: BrowserCacheLocation.LocalStorage // "localStorage"
+                              // cacheLocation: BrowserCacheLocation.SessionStorage // "sessionStorage"
+                            }
+                          };
+                          const pca = await PublicClientApplication.createPublicClientApplication(msalConfig);
+            
+                          const loginRequest = {
+                            scopes: [`https://${site}.sharepoint.com/.default`],
+                            // scopes: ["Sites.Read.All", "user.read", "mail.send"]
+                          };
+            
+                          const loginResponse = await pca.loginPopup(loginRequest);
+                          const myAccounts: any = pca.getAllAccounts();
+                          console.log("LIST MY All ACCounts====>", myAccounts);
+                          console.log("%c --->loginResponse", "color:hotpink", loginResponse)
+            
+                          const urlTanets = myAccounts[0]?.username?.split("@")[1];
+                          console.log("urlTanets", urlTanets);
+                          if (loginResponse && loginResponse.account) {
+                            const silentRequest = {
+                              account: loginResponse.account,
+                              scopes: [`https://${site}.sharepoint.com/.default`],
+                              // scopes: ["Sites.Read.All", "user.read", "mail.send"]
+                            };
+                            // const authResult = await pca.ssoSilent(silentRequest);
+                            let authResult;
+                            try {
+                              authResult = await pca.ssoSilent(silentRequest);
+                            } catch (err) {
+                              if (err instanceof InteractionRequiredAuthError) {
+                                const loginResponse = await pca.loginPopup(silentRequest).catch(error => {
+                                  console.log("error popup", error);
+                                });
+                              } else {
+                                console.log("error silent", err);
+                              }
+                            }
+                            /*
+                            // //acquire token 
+                            const acquireTokenScope = {
+                                scopes: ["Sites.Read.All", "user.read", "mail.send"],
+                                loginHint: 'johnt@clayfly.com'
+                            };
+                            // try {
+                            const accounts = pca.getAllAccounts();
+             
+                            if (accounts.length === 0) {
+                                // No accounts available, prompt user to login
+                                const loginResponse = await pca.loginPopup();
+                                pca.setActiveAccount(loginResponse.account);
+                            } else {
+                                // Use the first available account for token acquisition
+                                pca.setActiveAccount(accounts[0]);
+                            }
+             
+                            pca.acquireTokenSilent(acquireTokenScope).then(tokenResponse => {
+                                console.log("acquire token silent", tokenResponse);
+                                console.log("acquire token silent=>", tokenResponse.accessToken);
+                            }).catch(async (error) => {
+                                if (error instanceof InteractionRequiredAuthError) {
+                                    return pca.acquireTokenPopup(acquireTokenScope); // fallback to interaction when silent call fails
+                                }
+                                console.log("acquire token silent error", error);
+                            })
+            */
+                            const access_token = authResult?.accessToken;
+                            console.log("%c ----TokenData", "color:red", authResult)
+                            console.log("access token others,", site, access_token);
+                          }
+                        } catch (error) {
+                          console.error("Error fetching access token:", error);
+                        }
+                      }
+                      getAccessToken();
+            
+                      // if response is ok.
+                    } 
                   }
               }
               await FetchTickets();
