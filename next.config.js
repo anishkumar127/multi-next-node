@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  // reactStrictMode: false,
+  output: 'standalone',
+  publicRuntimeConfig: {
+      privateKeyPath: '/private-key.pem', // The path to your private key file in the public directory
+    },
   async headers() {
     return [
       {
