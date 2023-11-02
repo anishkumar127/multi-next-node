@@ -173,7 +173,7 @@ const GetById = ({ params }: any) => {
 
       }
     })();
-  }, []);
+  }, [site]);
 
   return <div>{JSON.stringify(token, null, 4)}</div>;
 };
