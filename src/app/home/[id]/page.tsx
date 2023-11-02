@@ -16,7 +16,8 @@ const GetById = ({ params }: any) => {
           if (process.env.NODE_ENV === 'development') {
             return 'http://localhost:3000';
           } else if (process.env.NODE_ENV === 'production') {
-            return 'https://multi-next-node.vercel.app';
+            // return 'https://multi-next-node.vercel.app';
+            return 'https://365multi.azurewebsites.net';
           }
         }
         const response = await axios.get(
