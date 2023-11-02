@@ -18,7 +18,7 @@ const GetById = ({ params }: any) => {
           } else if (process.env.NODE_ENV === 'production') {
             // return 'https://multi-next-node.vercel.app';
             // return 'https://depocheck2.azurewebsites.net';
-            return 'https://anish11.azurewebsites.net';
+            return 'https://anish1111.azurewebsites.net';
           }
         }
         const response = await axios.get(
