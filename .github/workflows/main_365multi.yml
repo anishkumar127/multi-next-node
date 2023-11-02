@@ -54,7 +54,10 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-
+      - name: Copy files
+        run: |
+          cp -R .next/static .next/standalone/.next/static
+          cp -R ./public .next/standalone/public
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
