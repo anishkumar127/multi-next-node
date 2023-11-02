@@ -17,7 +17,7 @@ const GetById = ({ params }: any) => {
             return 'http://localhost:3000';
           } else if (process.env.NODE_ENV === 'production') {
             // return 'https://multi-next-node.vercel.app';
-            return 'https://365multi.azurewebsites.net';
+            return 'https://depocheck2.azurewebsites.net';
           }
         }
         const response = await axios.get(
