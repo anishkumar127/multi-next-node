@@ -31,20 +31,11 @@ jobs:
         run: |
           npm install
           npm run build
-          # Create a backup of the public directory
-          mv ./build/static ./build/standalone/build
-          mv ./public ./public_backup
-          # Delete the existing public directory in the standalone directory
-          rm -rf ./build/standalone/public
-          # Move the public directory into the standalone directory
-          mv ./public ./build/standalone
-
-
           # mv ./build/static ./build/standalone/build
           # mv ./public ./build/standalone
           # # npm run build --if-present
           # # npm run test --if-present
-
+          mv ./build/static ./build/standalone/build
   #     - name: Zip artifact for deployment
   #       run: zip release.zip ./* -r
 
